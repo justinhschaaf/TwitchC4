@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.justinschaaf</groupId>
+    <artifactId>TwitchC4</artifactId>
+    <version>1.0</version>
+
+    <properties>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+
+        <jarplugin.version>3.1.1</jarplugin.version>
+        <shadeplugin.version>3.2.4</shadeplugin.version>
+
+        <twitch4j.version>1.5.1</twitch4j.version>
+        <nightconfig.version>3.6.4</nightconfig.version>
+
+    </properties>
+
+    <build>
+
+        <plugins>
+
+            <!--Make an executable JAR-->
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${jarplugin.version}</version>
+
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.justinschaaf.twitchc4.TwitchC4</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+
+            </plugin>
+
+            <!--Include Dependencies-->
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${shadeplugin.version}</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+        </plugins>
+
+        <resources>
+
+            <!--Include normal resources-->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+
+            <!--Include LICENSE and README-->
+            <resource>
+                <directory>${basedir}</directory>
+                <includes>
+                    <include>LICENSE.md</include>
+                    <include>README.md</include>
+                </includes>
+            </resource>
+
+        </resources>
+
+    </build>
+
+    <dependencies>
+
+        <!--Twitch4J-->
+        <dependency>
+            <groupId>com.github.twitch4j</groupId>
+            <artifactId>twitch4j</artifactId>
+            <version>${twitch4j.version}</version>
+        </dependency>
+
+        <!--Night Config-->
+        <dependency>
+            <groupId>com.electronwill.night-config</groupId>
+            <artifactId>hocon</artifactId>
+            <version>${nightconfig.version}</version>
+        </dependency>
+
+    </dependencies>
+
+</project>
